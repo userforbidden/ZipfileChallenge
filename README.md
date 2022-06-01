@@ -30,7 +30,12 @@ folder/folder/test.txt False 125 2022-05-19T10:56:30
 $
 ```
 
-## Usage 
+## Problem solving
+
+I took some references from the Python zipfile's code sample from this https://github.com/python/cpython/blob/3.10/Lib/zipfile.py 
+I felt like I am reinventing the wheel so made use of existing code and modified the listing option of the zipfile to display if it is a directory and comments
+
+## Solution Usage 
 ```
 exercise.py -l work_sample_exercise.zip
 ```
