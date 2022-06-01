@@ -2,8 +2,6 @@ import argparse
 import struct
 import io
 import os 
-import stat
-import time 
 import sys 
 
 structEndArchive = b"<4s4H2LH"
@@ -262,7 +260,6 @@ class ZipInfo (object):
    
     def is_dir(self):
         """Return True if this archive member is a directory."""
-        self.isDirectory == True
         return self.filename[-1] == '/'
 
 class ZipFile:
