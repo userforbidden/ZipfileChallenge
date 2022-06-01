@@ -10,11 +10,6 @@ structEndArchive = b"<4s4H2LH"
 stringEndArchive = b"PK\005\006"
 sizeEndCentDir = struct.calcsize(structEndArchive)
 
-_ECD_SIGNATURE = 0
-_ECD_DISK_NUMBER = 1
-_ECD_DISK_START = 2
-_ECD_ENTRIES_THIS_DISK = 3
-_ECD_ENTRIES_TOTAL = 4
 _ECD_SIZE = 5
 _ECD_OFFSET = 6
 _ECD_COMMENT_SIZE = 7
@@ -56,23 +51,9 @@ structFileHeader = "<4s2B4HL2L2H"
 stringFileHeader = b"PK\003\004"
 sizeFileHeader = struct.calcsize(structFileHeader)
 
-_FH_SIGNATURE = 0
-_FH_EXTRACT_VERSION = 1
-_FH_EXTRACT_SYSTEM = 2
-_FH_GENERAL_PURPOSE_FLAG_BITS = 3
-_FH_COMPRESSION_METHOD = 4
-_FH_LAST_MOD_TIME = 5
-_FH_LAST_MOD_DATE = 6
-_FH_CRC = 7
-_FH_COMPRESSED_SIZE = 8
-_FH_UNCOMPRESSED_SIZE = 9
-_FH_FILENAME_LENGTH = 10
-_FH_EXTRA_FIELD_LENGTH = 11
-
-
-ZIP64_LIMIT = (1 << 31) - 1
-ZIP_FILECOUNT_LIMIT = (1 << 16) - 1
-ZIP_MAX_COMMENT = (1 << 16) - 1
+# ZIP64_LIMIT = (1 << 31) - 1
+# ZIP_FILECOUNT_LIMIT = (1 << 16) - 1
+# ZIP_MAX_COMMENT = (1 << 16) - 1
 
 # constants for Zip file compression methods
 ZIP_STORED = 0
@@ -96,26 +77,6 @@ class LargeZipFile(Exception):
     Raised when writing a zipfile, the zipfile requires ZIP64 extensions
     and those extensions are disabled.
     """
-
-compressor_names = {
-    0: 'store',
-    1: 'shrink',
-    2: 'reduce',
-    3: 'reduce',
-    4: 'reduce',
-    5: 'reduce',
-    6: 'implode',
-    7: 'tokenize',
-    8: 'deflate',
-    9: 'deflate64',
-    10: 'implode',
-    12: 'bzip2',
-    14: 'lzma',
-    18: 'terse',
-    19: 'lz77',
-    97: 'wavpack',
-    98: 'ppmd',
-}
 
 def _EndRecData(fpin):
     """Return data from the "End of Central Directory" record, or None.
