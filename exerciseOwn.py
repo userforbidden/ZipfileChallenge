@@ -123,22 +123,19 @@ class ZipFile:
         total = 0
         while total < size_cd:
             centdir = fp.read(46)
-            centdir = struct.unpack("<4s4B4HL2L5H2L",centdir)
+            # print(centdir)
+            if len(centdir) != 46:
+                print("zip file truncated")
+            centdir = struct.unpack(b"<4s4B4HL2L5H2L",centdir)
+            # print(centdir)
             # print(centdir)
             if centdir[0] != b"PK\001\002":
                 print("bad bad")
             else:
                 
                 # Get the filename 
-                flags = centdir[5]
                 filename = fp.read(centdir[12])
-                if flags & 0x800:
-                    # UTF-8 file names extension
-                    filename = filename.decode('utf-8')
-                else:
-                    # Historical ZIP filename encoding
-                    filename = filename.decode('cp437')
-                
+                filename = filename.decode('utf-8')
                 # Find if it''s directory 
                 isDirectory = filename[-1] == '/'
                 # Find the Size
@@ -149,16 +146,14 @@ class ZipFile:
                 date_time = ( (lmd>>9)+1980, (lmd>>5)&0xF, lmd&0x1F,
                                 lmt>>11, (lmt>>5)&0x3F, (lmt&0x1F) * 2 )
                 formatted_date = "%d-%02d-%02d %02d:%02d:%02d" % date_time[:6]
+                # Read Extras 
+                extra = fp.read(centdir[13])
                 # Get the comment if there are any 
                 fileComment = fp.read(centdir[14]).decode('utf-8')
                 print("%-46s %10s %12d %30s %20s" % (filename,isDirectory, uncompressedSize,formatted_date,fileComment))
+                
                 total = (total + int(46) + centdir[12] + centdir[13] + centdir[14])
-                print(total)
-
-
-
-
-
+                # print(total)
 
 def main(args=None):
     description = "A Simple parser for reading zipfile contents"
@@ -170,13 +165,8 @@ def main(args=None):
 
     if args.list is not None:
         src = args.list
-        test()
-
         with ZipFile(src) as zf:
-            print("completed")
-
-        
-
+            print("Parser completed reading all files")
 
 if __name__ =="__main__":
     main()
