@@ -141,6 +141,31 @@ class ZipFile:
                 # Find the Size
                 uncompressedSize = centdir[11]
                 # Find Modified Date
+                '''
+                4.4.6 date and time fields: (2 bytes each)
+
+                The date and time are encoded in standard MS-DOS format.
+                If input came from standard input, the date and time are
+                those at which compression was started for this data. 
+                If encrypting the central directory and general purpose bit 
+                flag 13 is set indicating masking, the value stored in the 
+                Local Header will be zero. MS-DOS time format is different
+                from more commonly used computer time formats such as 
+                UTC. For example, MS-DOS uses year values relative to 1980
+                and 2 second precision.
+
+                The MS-DOS date. The date is a packed value with the following format.
+                    Bits    Description
+                    0-4     Day of the month (1–31)
+                    5-8     Month (1 = January, 2 = February, and so on)
+                    9-15    Year offset from 1980 (add 1980 to get actual year)
+
+                The MS-DOS time. The time is a packed value with the following format.
+                    Bits    Description
+                    0-4     Second divided by 2
+                    5-10    Minute (0–59)
+                    11-15    Hour (0–23 on a 24-hour clock)
+                '''
                 lmt = centdir[7]
                 lmd = centdir[8]
                 date_time = ( (lmd>>9)+1980, (lmd>>5)&0xF, lmd&0x1F,
