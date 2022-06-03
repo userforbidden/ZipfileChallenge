@@ -33,14 +33,15 @@ $
 ## Problem solving
 
 I took some references from the Python zipfile's code sample from this https://github.com/python/cpython/blob/3.10/Lib/zipfile.py 
-I felt like I am reinventing the wheel so made use of existing code and modified the listing option of the zipfile to display if it is a directory and comments
+
+zip file specifications is used to read the files one by one and based on the central directory each file is read and decoded to pront 
 
 ## Solution Usage 
 ```
-exercise.py -l work_sample_exercise.zip
+exerciseOwn.py -l work_sample_exercise.zip
 ```
 ```
-usage: exercise.py [-h] -l <zipfile>
+usage: exerciseOwn.py [-h] -l <zipfile>
 
 A Simple parser for reading zipfile contents
 
@@ -48,4 +49,8 @@ optional arguments:
   -h, --help            show this help message and exit
   -l <zipfile>, --list <zipfile>
                         Show list of all files and folders inside a zipfile
+                        
 ```
+## Some notes about Zip file 
+- A ZIP file MUST contain an "end of central directory record". A ZIP file containing only an "end of central directory record" is considered an empty ZIP file.
+
